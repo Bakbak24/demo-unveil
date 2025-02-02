@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.zakabak.demo"
     },
     "web": {
       "bundler": "metro",
@@ -32,10 +33,25 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsVersion": "11.0.0",
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTZnbjFqdmkwMm81MmtyN3prMGoxNmZkIn0.5LFpOGYivWBoBEoymG4lTw"
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c0eccd10-01be-463d-869c-e08b2b3ae40f"
+      }
     }
   }
 }
