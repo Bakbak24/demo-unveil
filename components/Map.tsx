@@ -1,10 +1,10 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Alert, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Alert, Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Mapbox, { MarkerView, Camera, LocationPuck } from "@rnmapbox/maps";
 
 Mapbox.setAccessToken(
-  "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1MmlzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
+  "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1M2lzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
 );
 
 const soundSpots = [
@@ -34,15 +34,19 @@ const Map = () => {
         {/* Soundspots markers */}
         {soundSpots.map((spot) => (
           <MarkerView key={spot.id} coordinate={spot.coordinates}>
-            <View style={styles.soundSpotMarker}>
-              <Text style={styles.soundSpotText}>❓</Text>
+            <View>
+              {/* Vervang het vraagteken door de afbeelding */}
+              <Image
+                source={require("../assets/images/sound-spot.png")}
+                style={styles.soundSpotImage}
+              />
             </View>
           </MarkerView>
         ))}
 
         {/* Locatie-indicator (vaste plek) */}
         <LocationPuck puckBearing="course" puckBearingEnabled={true} />
-        </Mapbox.MapView>
+      </Mapbox.MapView>
 
       <View style={styles.overlay}>
         <TouchableOpacity
@@ -131,9 +135,11 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 2,
     borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  soundSpotText: {
-    fontSize: 18,
-    fontWeight: "bold",
+  soundSpotImage: {
+    width: 56,
+    height: 56,
   },
 });
