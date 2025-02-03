@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert, Text, TouchableOpacity } from "react-native";
 // import MapView, { Marker } from "react-native-maps";
-import { Ionicons } from "@expo/vector-icons";
 import Map from "@/components/Map";
 // import * as Location from "expo-location";
 

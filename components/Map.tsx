@@ -1,11 +1,17 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Alert, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Mapbox from "@rnmapbox/maps";
+import Mapbox, { MarkerView, Camera, LocationPuck } from "@rnmapbox/maps";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1MmlzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
 );
+
+const soundSpots = [
+  { id: 1, coordinates: [4.487911, 51.022523] },
+  { id: 2, coordinates: [4.486660, 51.022755] },
+  { id: 3, coordinates: [4.487757, 51.022894] },
+];
 
 const Map = () => {
   return (
@@ -15,7 +21,29 @@ const Map = () => {
         scaleBarEnabled={false}
         logoPosition={{ bottom: -20, left: -100 }}
         attributionPosition={{ bottom: -20, left: -20 }}
-      />
+        styleURL={Mapbox.StyleURL.Dark}
+      >
+        {/* Camera gefixeerd op Thomas More */}
+        <Camera
+          zoomLevel={17.5}
+          centerCoordinate={[4.487538, 51.022563]}
+          animationMode="flyTo"
+          animationDuration={2000}
+        />
+
+        {/* Soundspots markers */}
+        {soundSpots.map((spot) => (
+          <MarkerView key={spot.id} coordinate={spot.coordinates}>
+            <View style={styles.soundSpotMarker}>
+              <Text style={styles.soundSpotText}>❓</Text>
+            </View>
+          </MarkerView>
+        ))}
+
+        {/* Locatie-indicator (vaste plek) */}
+        <LocationPuck puckBearing="course" puckBearingEnabled={true} />
+        </Mapbox.MapView>
+
       <View style={styles.overlay}>
         <TouchableOpacity
           style={styles.themesButton}
@@ -49,12 +77,6 @@ const Map = () => {
 };
 
 export default Map;
-
-{
-  /* import { Dimensions } from "react-native";
-
-const { width, height } = Dimensions.get("window"); */
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -102,5 +124,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "600",
+  },
+  soundSpotMarker: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 8,
+    borderWidth: 2,
+    borderColor: "black",
+  },
+  soundSpotText: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
