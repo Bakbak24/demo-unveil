@@ -1,7 +1,15 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Alert, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Alert,
+  Text,
+  Image,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Mapbox, { MarkerView, Camera, LocationPuck } from "@rnmapbox/maps";
+import { useRouter } from "expo-router";
 
 Mapbox.setAccessToken(
   "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1M2lzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
@@ -9,11 +17,24 @@ Mapbox.setAccessToken(
 
 const soundSpots = [
   { id: 1, coordinates: [4.487911, 51.022523] },
-  { id: 2, coordinates: [4.486660, 51.022755] },
+  { id: 2, coordinates: [4.48666, 51.022755] },
   { id: 3, coordinates: [4.487757, 51.022894] },
 ];
 
 const Map = () => {
+  const router = useRouter();
+
+  const handleMarkerPress = (spotId: number) => {
+    if (spotId === 3) {
+      router.push({
+        pathname: "/audio",
+        params: {
+          audio: "audio_dijle.mp3",
+          text: "De Dijle is een van de belangrijkste rivieren van Mechelen...",
+        },
+      });
+    }
+  };
   return (
     <View style={styles.container}>
       <Mapbox.MapView
@@ -30,19 +51,17 @@ const Map = () => {
           animationMode="flyTo"
           animationDuration={2000}
         />
-
         {/* Soundspots markers */}
         {soundSpots.map((spot) => (
           <MarkerView key={spot.id} coordinate={spot.coordinates}>
-            <View>
+            <TouchableOpacity onPress={() => handleMarkerPress(spot.id)}>
               <Image
                 source={require("../assets/images/sound-spot.png")}
                 style={styles.soundSpotImage}
               />
-            </View>
+            </TouchableOpacity>
           </MarkerView>
         ))}
-
         {/* Locatie-indicator (vaste plek) */}
         <LocationPuck puckBearing="course" puckBearingEnabled={true} />
       </Mapbox.MapView>
