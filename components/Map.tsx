@@ -35,7 +35,6 @@ const Map = () => {
         {soundSpots.map((spot) => (
           <MarkerView key={spot.id} coordinate={spot.coordinates}>
             <View>
-              {/* Vervang het vraagteken door de afbeelding */}
               <Image
                 source={require("../assets/images/sound-spot.png")}
                 style={styles.soundSpotImage}
