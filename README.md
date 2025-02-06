@@ -15,9 +15,11 @@ Before you start, make sure you have the following installed:
 - Expo CLI
 
 For Android Developers:
+
 - Android Studio (for Android emulator setup)
 
 For iOS Developers:
+
 - Xcode (for iOS simulator setup)
 
 - Expo Dev Client (for development builds)
@@ -30,7 +32,25 @@ For iOS Developers:
    npm install
    ```
 
-2. Start the app
+2. Install EAS CLI
+
+   ```bash
+    npm install -g eas-cli
+   ```
+
+3. Log in with EAS
+
+   ```bash
+    eas login
+   ```
+
+4. Create a build
+
+   ```bash
+    eas build --platform android --profile development
+   ```
+
+5. Start the app
 
    ```bash
     npx expo start
