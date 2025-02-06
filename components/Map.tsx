@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -15,26 +15,58 @@ Mapbox.setAccessToken(
   "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1M2lzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
 );
 
-const soundSpots = [
-  { id: 1, coordinates: [4.487911, 51.022523] },
-  { id: 2, coordinates: [4.48666, 51.022755] },
-  { id: 3, coordinates: [4.487757, 51.022894] },
+const mockSoundSpots = [
+  {
+    id: 1,
+    name: "Soundspot Dijle",
+    script: "Dit is een script voor soundspot Dijle",
+    location: { latitude: 4.487757, longitude: 51.022894 }, // Mechelen, België
+    audio: "audio_dijle.mp3",
+  },
+  {
+    id: 2,
+    name: "Soundspot Dossinkazerne",
+    script: "Dit is een script voor soundspot Dossinkazerne",
+    location: { latitude: 4.48666, longitude: 51.022755 }, // Mechelen, België
+    audio: "audio_dossinkazerne.mp3",
+  },
+  {
+    id: 3,
+    name: "Soundspot Campus De Ham",
+    script: "Dit is een script voor soundspot Campus De Ham",
+    location: { latitude: 4.487911, longitude: 51.022523 }, // Mechelen, België
+    audio: "audio_campus_de_ham.mp3",
+  },
 ];
 
 const Map = () => {
+  const [soundSpots, setSoundSpots] = useState(mockSoundSpots);
   const router = useRouter();
 
-  const handleMarkerPress = (spotId: number) => {
-    if (spotId === 3) {
-      router.push({
-        pathname: "/audio",
-        params: {
-          audio: "audio_dijle.mp3",
-          text: "De Dijle is een van de belangrijkste rivieren van Mechelen...",
-        },
-      });
-    }
+  // Pas als de backend klaar is kan ik een echte fetch doen, in plaats van de mockSoundSpots
+  useEffect(() => {
+    // fetch('https://api.jouwbackend.com/soundspots')
+    //   .then(response => response.json())
+    //   .then(data => setSoundSpots(data))
+    //   .catch(error => console.error(error));
+  }, []);
+
+  const handleMarkerPress = (soundSpot: {
+    id?: number;
+    name?: string;
+    script: any;
+    location?: { latitude: number; longitude: number };
+    audio: any;
+  }) => {
+    router.push({
+      pathname: "/audio",
+      params: {
+        audio: soundSpot.audio,
+        text: soundSpot.script,
+      },
+    });
   };
+
   return (
     <View style={styles.container}>
       <Mapbox.MapView
@@ -53,8 +85,11 @@ const Map = () => {
         />
         {/* Soundspots markers */}
         {soundSpots.map((spot) => (
-          <MarkerView key={spot.id} coordinate={spot.coordinates}>
-            <TouchableOpacity onPress={() => handleMarkerPress(spot.id)}>
+          <MarkerView
+            key={spot.id}
+            coordinate={[spot.location.latitude, spot.location.longitude]}
+          >
+            <TouchableOpacity onPress={() => handleMarkerPress(spot)}>
               <Image
                 source={require("../assets/images/sound-spot.png")}
                 style={styles.soundSpotImage}
