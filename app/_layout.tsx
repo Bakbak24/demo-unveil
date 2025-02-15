@@ -10,6 +10,12 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="user"
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="+not-found" options={{}} />
     </Stack>
   );

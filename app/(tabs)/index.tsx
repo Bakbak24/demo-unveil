@@ -5,12 +5,10 @@ import Map from "@/components/Map";
 // import * as Location from "expo-location";
 
 export default function Index() {
-
-  return (
-    <Map />
-  );
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+  return <Map />;
 }
 
-const styles = StyleSheet.create({
-  
-});
+const styles = StyleSheet.create({});
