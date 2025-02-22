@@ -12,7 +12,7 @@ import Mapbox, { MarkerView, Camera, LocationPuck } from "@rnmapbox/maps";
 import { useRouter } from "expo-router";
 
 Mapbox.setAccessToken(
-  "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1M2lzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
+  "pk.eyJ1IjoiemFrYWJhayIsImEiOiJjbTY5bGExdXIwY2V1MmlzZHBuN2Nvd3J1In0.Rlp8SLzrBJrDNO9rmIXszA"
 );
 
 const mockSoundSpots = [
@@ -45,17 +45,17 @@ const Map = () => {
 
   // Pas als de backend klaar is kan ik een echte fetch doen, in plaats van de mockSoundSpots
   useEffect(() => {
-    // fetch('https://api.jouwbackend.com/soundspots')
+    // fetch('https://api.backend.com/soundspots')
     //   .then(response => response.json())
     //   .then(data => setSoundSpots(data))
     //   .catch(error => console.error(error));
   }, []);
 
   const handleMarkerPress = (soundSpot: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
     script: any;
-    location?: { latitude: number; longitude: number };
+    location: { latitude: number; longitude: number };
     audio: any;
   }) => {
     router.push({

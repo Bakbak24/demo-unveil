@@ -1,23 +1,45 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function UserScreen() {
   const router = useRouter();
 
-  const menuItems: {label: string; icon: "person-outline"| "information-circle-outline"| "settings-outline"| "globe-outline"; route: "/user/account" | "/user/about" | "/user/permissions" | "/user/language";}[] = [
+  const menuItems: {
+    label: string;
+    icon:
+      | "person-outline"
+      | "information-circle-outline"
+      | "settings-outline"
+      | "globe-outline";
+    route:
+      | "/user/account"
+      | "/user/about"
+      | "/user/permissions"
+      | "/user/language";
+  }[] = [
     { label: "Account", icon: "person-outline", route: "/user/account" },
-    { label: "About", icon: "information-circle-outline", route: "/user/about" },
-    { label: "Device Permissions", icon: "settings-outline", route: "/user/permissions" },
+    {
+      label: "About",
+      icon: "information-circle-outline",
+      route: "/user/about",
+    },
+    {
+      label: "Device Permissions",
+      icon: "settings-outline",
+      route: "/user/permissions",
+    },
     { label: "Language", icon: "globe-outline", route: "/user/language" },
   ];
 
   return (
     <View style={styles.container}>
       {/* Header */}
+      <StatusBar style="dark" />
       <View style={styles.header}>
         <Image
-          source={{ uri: "https://placehold.co/100x100/000000/FFF" }}
+          source={require("../../assets/images/icon.png")}
           style={styles.profileImage}
         />
         <Text style={styles.greeting}>Good morning</Text>
@@ -61,6 +83,12 @@ export default function UserScreen() {
           style={styles.icon}
         />
         <Text style={styles.logoutText}>Log Out</Text>
+        <Ionicons
+              name="chevron-forward-outline"
+              size={24}
+              color="black"
+              style={styles.arrow}
+            />
       </TouchableOpacity>
     </View>
   );
@@ -69,27 +97,28 @@ export default function UserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#212121",
     padding: 20,
   },
   header: {
     alignItems: "center",
     marginBottom: 30,
+    marginTop: 20,
   },
   profileImage: {
-    width: 100,
-    height: 100,
+    width: 148,
+    height: 148,
     borderRadius: 50,
     marginBottom: 10,
-    borderWidth: 2,
   },
   greeting: {
-    fontSize: 18,
-    color: "gray",
+    fontSize: 14,
+    color: "white",
   },
   username: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
+    color: "white",
   },
   menuContainer: {
     marginBottom: 20,
@@ -97,32 +126,35 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#333",
     padding: 15,
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 16,
   },
   icon: {
     marginRight: 10,
+    color: "white",
   },
   menuText: {
     flex: 1,
     fontSize: 18,
+    color: "white",
   },
   arrow: {
-    opacity: 0.5,
+    color: "white",
   },
   logoutButton: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
+    justifyContent: "flex-start",
+    backgroundColor: "#5CD4FF",
     padding: 15,
     borderRadius: 10,
     marginTop: "auto",
   },
   logoutText: {
-    color: "black",
+    flex: 1,
+    color: "white",
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 10,

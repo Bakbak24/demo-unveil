@@ -5,9 +5,7 @@ import Map from "@/components/Map";
 // import * as Location from "expo-location";
 
 export default function Index() {
-  console.log = () => {};
-  console.warn = () => {};
-  console.error = () => {};
+
   return <Map />;
 }
 

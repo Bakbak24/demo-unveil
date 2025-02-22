@@ -44,13 +44,19 @@ For iOS Developers:
     eas login
    ```
 
-4. Create a build
+4. Configure build
+
+   ```bash
+    eas build:configure
+   ```
+
+5. Create a build
 
    ```bash
     eas build --platform android --profile development
    ```
 
-5. Start the app
+6. Start the app
 
    ```bash
     npx expo start
