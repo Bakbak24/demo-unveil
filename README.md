@@ -12,7 +12,6 @@ Prerequisites
 Before you start, make sure you have the following installed:
 
 - Node.js
-- Expo CLI
 
 For Android Developers:
 
@@ -21,8 +20,6 @@ For Android Developers:
 For iOS Developers:
 
 - Xcode (for iOS simulator setup)
-
-- Expo Dev Client (for development builds)
 
 ## Get started
 
