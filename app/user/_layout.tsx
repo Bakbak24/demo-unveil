@@ -12,7 +12,11 @@ export default function UserLayout() {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="account" />
+      <Stack.Screen name="account" 
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="about" />
       <Stack.Screen name="permissions" />
       <Stack.Screen name="language" />

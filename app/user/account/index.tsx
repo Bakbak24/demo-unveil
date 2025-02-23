@@ -1,50 +1,48 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function UserScreen() {
+export default function AccountScreen() {
   const router = useRouter();
 
   const menuItems: {
     label: string;
     icon:
       | "person-outline"
-      | "information-circle-outline"
-      | "settings-outline"
-      | "globe-outline";
+      | "lock-closed-outline"
+      | "card-outline"
+      | "location-outline";
     route:
-      | "/user/account"
-      | "/user/about"
-      | "/user/permissions"
-      | "/user/language";
+      | "/user/account/personal-info"
+      | "/user/account/security"
+      | "/user/account/payment"
+      | "/user/account/add-spot";
   }[] = [
-    { label: "Account", icon: "person-outline", route: "/user/account" },
     {
-      label: "About",
-      icon: "information-circle-outline",
-      route: "/user/about",
+      label: "Personal Information",
+      icon: "person-outline",
+      route: "/user/account/personal-info",
     },
     {
-      label: "Device Permissions",
-      icon: "settings-outline",
-      route: "/user/permissions",
+      label: "Password and Security",
+      icon: "lock-closed-outline",
+      route: "/user/account/security",
     },
-    { label: "Language", icon: "globe-outline", route: "/user/language" },
+    {
+      label: "Payment Options",
+      icon: "card-outline",
+      route: "/user/account/payment",
+    },
+    {
+      label: "Add a Spot to the Map",
+      icon: "location-outline",
+      route: "/user/account/add-spot",
+    },
   ];
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Image
-          source={require("../../assets/images/icon.png")}
-          style={styles.profileImage}
-        />
-        <Text style={styles.greeting}>Good morning</Text>
-        <Text style={styles.username}>Unveil User</Text>
-      </View>
-
       {/* Menu Items */}
       <View style={styles.menuContainer}>
         {menuItems.map((item, index) => (
@@ -56,38 +54,38 @@ export default function UserScreen() {
             <Ionicons
               name={item.icon}
               size={24}
-              color="black"
+              color="white"
               style={styles.icon}
             />
             <Text style={styles.menuText}>{item.label}</Text>
             <Ionicons
               name="chevron-forward-outline"
               size={24}
-              color="black"
+              color="white"
               style={styles.arrow}
             />
           </TouchableOpacity>
         ))}
       </View>
 
-      {/* Logout Button */}
+      {/* Delete Account Button */}
       <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={() => console.log("Logout Pressed")}
+        style={styles.deleteButton}
+        onPress={() => console.log("Delete Account Pressed")}
       >
         <Ionicons
-          name="log-out-outline"
+          name="trash-outline"
           size={24}
-          color="black"
+          color="white"
           style={styles.icon}
         />
-        <Text style={styles.logoutText}>Log Out</Text>
+        <Text style={styles.deleteText}>Delete my Account</Text>
         <Ionicons
-              name="chevron-forward-outline"
-              size={24}
-              color="black"
-              style={styles.arrow}
-            />
+          name="chevron-forward-outline"
+          size={24}
+          color="black"
+          style={styles.arrow}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -98,26 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#212121",
     padding: 20,
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 30,
-    marginTop: 20,
-  },
-  profileImage: {
-    width: 148,
-    height: 148,
-    borderRadius: 50,
-    marginBottom: 10,
-  },
-  greeting: {
-    fontSize: 14,
-    color: "white",
-  },
-  username: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
   },
   menuContainer: {
     marginBottom: 20,
@@ -142,7 +120,7 @@ const styles = StyleSheet.create({
   arrow: {
     color: "white",
   },
-  logoutButton: {
+  deleteButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -151,7 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: "auto",
   },
-  logoutText: {
+  deleteText: {
     flex: 1,
     color: "white",
     fontSize: 18,
