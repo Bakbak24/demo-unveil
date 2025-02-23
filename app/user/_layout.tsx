@@ -17,7 +17,11 @@ export default function UserLayout() {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="about" />
+      <Stack.Screen name="about" 
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="permissions" />
       <Stack.Screen name="language" />
     </Stack>
