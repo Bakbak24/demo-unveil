@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 148,
     height: 148,
-    borderRadius: 50,
+    borderRadius: 100,
     marginBottom: 10,
   },
   greeting: {
