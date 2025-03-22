@@ -1,11 +1,80 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Image,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import GuidedTourWrapper from "../../components/GuidedTourWrapper";
+import FavouriteSoundSpot from "../../components/FavouriteSoundSpot";
 
 const AudioScreen = () => {
   const [activeTab, setActiveTab] = useState("All");
 
   const tabs = ["All", "Free Roam", "Guided tours", "Your favourites"];
+
+  // Render content gebaseerd op de actieve tab
+  const renderContent = () => {
+    switch (activeTab) {
+      case "Guided tours":
+        return (
+          <>
+            {/* Variant 1: Gekocht */}
+            <GuidedTourWrapper
+              imageUrl="https://via.placeholder.com/140"
+              title="Mechelen and the holocaust"
+              isPurchased={true}
+              onPress={() => console.log("Start tour")}
+            />
+            <GuidedTourWrapper
+              imageUrl="https://via.placeholder.com/140"
+              title="The mirror of Mechelen"
+              isPurchased={true}
+              onPress={() => console.log("Start tour")}
+            />
+            {/* Variant 2: Niet gekocht */}
+            <GuidedTourWrapper
+              imageUrl="https://via.placeholder.com/140"
+              title="Through the outskirts"
+              isPurchased={false}
+              onPress={() => console.log("Buy tour")}
+            />
+            <GuidedTourWrapper
+              imageUrl="https://via.placeholder.com/140"
+              title="A foodies guide to Mechelen"
+              isPurchased={false}
+              onPress={() => console.log("Buy tour")}
+            />
+          </>
+        );
+      case "Your favourites":
+        return (
+          <>
+            {/* Lijst van favoriete sound spots */}
+            <FavouriteSoundSpot
+              name="Volmolen"
+              distance="48m"
+              onPress={() => console.log("Volmolen pressed")}
+            />
+            <FavouriteSoundSpot
+              name="Kruidtuin"
+              distance="203m"
+              onPress={() => console.log("Kruidtuin pressed")}
+            />
+            <FavouriteSoundSpot
+              name="Het Dijlepad"
+              distance="412m"
+              onPress={() => console.log("Het Dijlepad pressed")}
+            />
+          </>
+        );
+      default:
+        return <DefaultContent />;
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -16,7 +85,11 @@ const AudioScreen = () => {
             source={require("../../assets/images/pfp.png")}
             style={styles.profilePicture}
           />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabsContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.tabsContainer}
+          >
             {tabs.map((tab) => (
               <TouchableOpacity
                 key={tab}
@@ -39,125 +112,210 @@ const AudioScreen = () => {
           </ScrollView>
         </View>
 
-        {/* Grotere knoppen */}
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.largeButton}>
-            <View style={styles.buttonImagePlaceholder} />
-            <Text style={styles.buttonText}>New Stories</Text>
-            <Ionicons name="arrow-forward" size={24} color="white" style={styles.buttonIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.largeButton}>
-            <View style={styles.buttonImagePlaceholder} />
-            <Text style={styles.buttonText}>Best Reviewed Stories</Text>
-            <Ionicons name="arrow-forward" size={24} color="white" style={styles.buttonIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.largeButton}>
-            <View style={styles.buttonImagePlaceholder} />
-            <Text style={styles.buttonText}>For You</Text>
-            <Ionicons name="arrow-forward" size={24} color="white" style={styles.buttonIcon} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Listen right now */}
-        <Text style={[styles.sectionTitle]}>Listen right now</Text>
-        <View style={styles.listenNowContainer}>
-          <TouchableOpacity style={styles.listenNowButton}>
-            <Ionicons name="headset" size={24} color="white" style={styles.listenNowIcon} />
-            <View style={styles.listenNowTextContainer}>
-              <Text style={styles.listenNowTitle}>Campus De Ham Thomas More</Text>
-              <Text style={styles.listenNowDistance}>4m</Text>
-            </View>
-            <Ionicons name="play" size={24} color="#5CD4FF" style={styles.listenNowIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.listenNowButton}>
-            <Ionicons name="headset" size={24} color="white" style={styles.listenNowIcon} />
-            <View style={styles.listenNowTextContainer}>
-              <Text style={styles.listenNowTitle}>Alice Nahonplein</Text>
-              <Text style={styles.listenNowDistance}>18m</Text>
-            </View>
-            <Ionicons name="play" size={24} color="#5CD4FF" style={styles.listenNowIcon} />
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity>
-          <Text style={styles.seeMoreText}>See more</Text>
-        </TouchableOpacity>
-
-        {/* Get closer to listen */}
-        <Text style={[styles.sectionTitle]}>Get closer to listen</Text>
-        <View style={styles.listenNowContainer}>
-          <TouchableOpacity style={styles.listenNowButton}>
-            <Ionicons name="headset" size={24} color="white" style={styles.listenNowIcon} />
-            <View style={styles.listenNowTextContainer}>
-              <Text style={styles.listenNowTitle}>Volmolen</Text>
-              <Text style={styles.listenNowDistance}>48m</Text>
-            </View>
-            <Ionicons name="location" size={24} color="#5CD4FF" style={styles.listenNowIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.listenNowButton}>
-            <Ionicons name="headset" size={24} color="white" style={styles.listenNowIcon} />
-            <View style={styles.listenNowTextContainer}>
-              <Text style={styles.listenNowTitle}>Kruidtuin</Text>
-              <Text style={styles.listenNowDistance}>203m</Text>
-            </View>
-            <Ionicons name="location" size={24} color="#5CD4FF" style={styles.listenNowIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.listenNowButton}>
-            <Ionicons name="headset" size={24} color="white" style={styles.listenNowIcon} />
-            <View style={styles.listenNowTextContainer}>
-              <Text style={styles.listenNowTitle}>Het Dijlepad</Text>
-              <Text style={styles.listenNowDistance}>412m</Text>
-            </View>
-            <Ionicons name="location" size={24} color="#5CD4FF" style={styles.listenNowIcon} />
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity>
-          <Text style={styles.seeMoreText}>See more</Text>
-        </TouchableOpacity>
-
-        {/* Guided tours */}
-        <Text style={[styles.sectionTitle]}>Guided tours</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.guidedToursContainer}>
-          <View style={styles.guidedTourItem}>
-            <Image
-              source={{ uri: 'https://via.placeholder.com/150' }}
-              style={styles.guidedTourImage}
-              blurRadius={5}
-            />
-            <Text style={styles.guidedTourTitle}>Mechelen and the holocaust</Text>
-            <Text style={styles.guidedTourSubtitle}>From Dossin to the hidden stories</Text>
-          </View>
-          <View style={styles.guidedTourItem}>
-            <Image
-              source={{ uri: 'https://via.placeholder.com/150' }}
-              style={styles.guidedTourImage}
-              blurRadius={5}
-            />
-            <Text style={styles.guidedTourTitle}>The mirror of Mechelen</Text>
-            <Text style={styles.guidedTourSubtitle}>From trade route to connector</Text>
-          </View>
-          <View style={styles.guidedTourItem}>
-            <Image
-              source={{ uri: 'https://via.placeholder.com/150' }}
-              style={styles.guidedTourImage}
-              blurRadius={5}
-            />
-            <Text style={styles.guidedTourTitle}>Trough the outskirts</Text>
-            <Text style={styles.guidedTourSubtitle}>When you want some peace and quiet</Text>
-          </View>
-          <View style={styles.guidedTourItem}>
-            <Image
-              source={{ uri: 'https://via.placeholder.com/150' }}
-              style={styles.guidedTourImage}
-              blurRadius={5}
-            />
-            <Text style={styles.guidedTourTitle}>A foodies guide to Mechelen</Text>
-            <Text style={styles.guidedTourSubtitle}>Don't get too hungry listening to these</Text>
-          </View>
-        </ScrollView>
+        {/* Render de content gebaseerd op de actieve tab */}
+        {renderContent()}
       </View>
     </ScrollView>
   );
 };
+
+// Standaard content voor de andere tabs
+const DefaultContent = () => (
+  <View>
+    {/* Grotere knoppen */}
+    <View style={styles.buttonsContainer}>
+      <TouchableOpacity style={styles.largeButton}>
+        <View style={styles.buttonImagePlaceholder} />
+        <Text style={styles.buttonText}>New Stories</Text>
+        <Ionicons
+          name="arrow-forward"
+          size={24}
+          color="white"
+          style={styles.buttonIcon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.largeButton}>
+        <View style={styles.buttonImagePlaceholder} />
+        <Text style={styles.buttonText}>Best Reviewed Stories</Text>
+        <Ionicons
+          name="arrow-forward"
+          size={24}
+          color="white"
+          style={styles.buttonIcon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.largeButton}>
+        <View style={styles.buttonImagePlaceholder} />
+        <Text style={styles.buttonText}>For You</Text>
+        <Ionicons
+          name="arrow-forward"
+          size={24}
+          color="white"
+          style={styles.buttonIcon}
+        />
+      </TouchableOpacity>
+    </View>
+
+    {/* Listen right now */}
+    <Text style={styles.sectionTitle}>Listen right now</Text>
+    <View style={styles.listenNowContainer}>
+      <TouchableOpacity style={styles.listenNowButton}>
+        <Ionicons
+          name="headset"
+          size={24}
+          color="white"
+          style={styles.listenNowIcon}
+        />
+        <View style={styles.listenNowTextContainer}>
+          <Text style={styles.listenNowTitle}>Campus De Ham Thomas More</Text>
+          <Text style={styles.listenNowDistance}>4m</Text>
+        </View>
+        <Ionicons
+          name="play"
+          size={24}
+          color="#5CD4FF"
+          style={styles.listenNowIcon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.listenNowButton}>
+        <Ionicons
+          name="headset"
+          size={24}
+          color="white"
+          style={styles.listenNowIcon}
+        />
+        <View style={styles.listenNowTextContainer}>
+          <Text style={styles.listenNowTitle}>Alice Nahonplein</Text>
+          <Text style={styles.listenNowDistance}>18m</Text>
+        </View>
+        <Ionicons
+          name="play"
+          size={24}
+          color="#5CD4FF"
+          style={styles.listenNowIcon}
+        />
+      </TouchableOpacity>
+    </View>
+    <TouchableOpacity>
+      <Text style={styles.seeMoreText}>See more</Text>
+    </TouchableOpacity>
+
+    {/* Get closer to listen */}
+    <Text style={styles.sectionTitle}>Get closer to listen</Text>
+    <View style={styles.listenNowContainer}>
+      <TouchableOpacity style={styles.listenNowButton}>
+        <Ionicons
+          name="headset"
+          size={24}
+          color="white"
+          style={styles.listenNowIcon}
+        />
+        <View style={styles.listenNowTextContainer}>
+          <Text style={styles.listenNowTitle}>Volmolen</Text>
+          <Text style={styles.listenNowDistance}>48m</Text>
+        </View>
+        <Ionicons
+          name="location"
+          size={24}
+          color="#5CD4FF"
+          style={styles.listenNowIcon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.listenNowButton}>
+        <Ionicons
+          name="headset"
+          size={24}
+          color="white"
+          style={styles.listenNowIcon}
+        />
+        <View style={styles.listenNowTextContainer}>
+          <Text style={styles.listenNowTitle}>Kruidtuin</Text>
+          <Text style={styles.listenNowDistance}>203m</Text>
+        </View>
+        <Ionicons
+          name="location"
+          size={24}
+          color="#5CD4FF"
+          style={styles.listenNowIcon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.listenNowButton}>
+        <Ionicons
+          name="headset"
+          size={24}
+          color="white"
+          style={styles.listenNowIcon}
+        />
+        <View style={styles.listenNowTextContainer}>
+          <Text style={styles.listenNowTitle}>Het Dijlepad</Text>
+          <Text style={styles.listenNowDistance}>412m</Text>
+        </View>
+        <Ionicons
+          name="location"
+          size={24}
+          color="#5CD4FF"
+          style={styles.listenNowIcon}
+        />
+      </TouchableOpacity>
+    </View>
+    <TouchableOpacity>
+      <Text style={styles.seeMoreText}>See more</Text>
+    </TouchableOpacity>
+
+    {/* Guided tours */}
+    <Text style={styles.sectionTitle}>Guided tours</Text>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={styles.guidedToursContainer}
+    >
+      <View style={styles.guidedTourItem}>
+        <Image
+          source={{ uri: "https://via.placeholder.com/150" }}
+          style={styles.guidedTourImage}
+          blurRadius={5}
+        />
+        <Text style={styles.guidedTourTitle}>Mechelen and the holocaust</Text>
+        <Text style={styles.guidedTourSubtitle}>
+          From Dossin to the hidden stories
+        </Text>
+      </View>
+      <View style={styles.guidedTourItem}>
+        <Image
+          source={{ uri: "https://via.placeholder.com/150" }}
+          style={styles.guidedTourImage}
+          blurRadius={5}
+        />
+        <Text style={styles.guidedTourTitle}>The mirror of Mechelen</Text>
+        <Text style={styles.guidedTourSubtitle}>
+          From trade route to connector
+        </Text>
+      </View>
+      <View style={styles.guidedTourItem}>
+        <Image
+          source={{ uri: "https://via.placeholder.com/150" }}
+          style={styles.guidedTourImage}
+          blurRadius={5}
+        />
+        <Text style={styles.guidedTourTitle}>Trough the outskirts</Text>
+        <Text style={styles.guidedTourSubtitle}>
+          When you want some peace and quiet
+        </Text>
+      </View>
+      <View style={styles.guidedTourItem}>
+        <Image
+          source={{ uri: "https://via.placeholder.com/150" }}
+          style={styles.guidedTourImage}
+          blurRadius={5}
+        />
+        <Text style={styles.guidedTourTitle}>A foodies guide to Mechelen</Text>
+        <Text style={styles.guidedTourSubtitle}>
+          Don't get too hungry listening to these
+        </Text>
+      </View>
+    </ScrollView>
+  </View>
+);
 
 export default AudioScreen;
 
@@ -205,7 +363,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     marginTop: 20,
-    width: '100%',
+    width: "100%",
   },
   largeButton: {
     flexDirection: "row",
@@ -214,7 +372,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 10,
     padding: 10,
-    width: '100%',
+    width: "100%",
   },
   buttonImagePlaceholder: {
     width: 50,
@@ -302,5 +460,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 24,
     width: "80%",
+  },
+  tabMessage: {
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 50,
   },
 });
