@@ -8,51 +8,61 @@ interface FavouriteSoundSpotProps {
   onPress: () => void;
 }
 
-const FavouriteSoundSpot: React.FC<FavouriteSoundSpotProps> = ({ name, distance, onPress }) => {
+const FavouriteSoundSpot: React.FC<FavouriteSoundSpotProps> = ({
+  name,
+  distance,
+  onPress,
+}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.listenNowButton} onPress={onPress}>
       {/* Geluidsicoon */}
-      <Ionicons name="musical-notes" size={24} color="#C2C2C2" style={styles.icon} />
+      <Ionicons
+        name="headset"
+        size={24}
+        color="#C2C2C2"
+        style={styles.listenNowIcon}
+      />
 
       {/* Naam en afstand */}
-      <View style={styles.textContainer}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.distance}>{distance}</Text>
+      <View style={styles.listenNowTextContainer}>
+        <Text style={styles.listenNowTitle}>{name}</Text>
+        <Text style={styles.listenNowDistance}>{distance}</Text>
       </View>
 
       {/* Locatie-icoon */}
-      <Ionicons name="location" size={24} color="#C2C2C2" style={styles.locationIcon} />
+      <Ionicons
+        name="location"
+        size={24}
+        color="#C2C2C2" // Grijs kleur
+        style={styles.listenNowIcon}
+      />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  listenNowButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#333333",
+    backgroundColor: "#333333", // Grijze achtergrond
     borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
+    marginVertical: 10,
+    padding: 10,
   },
-  icon: {
-    marginRight: 15,
+  listenNowIcon: {
+    marginHorizontal: 10,
   },
-  textContainer: {
+  listenNowTextContainer: {
     flex: 1,
   },
-  name: {
+  listenNowTitle: {
     color: "white",
-    fontSize: 14,
+    fontSize: 18, // 14px
     fontWeight: "bold",
   },
-  distance: {
-    color: "#C2C2C2",
-    fontSize: 12,
-    marginTop: 5,
-  },
-  locationIcon: {
-    marginLeft: 10,
+  listenNowDistance: {
+    color: "#C2C2C2", // Grijs kleur
+    fontSize: 12, // 12px
   },
 });
 

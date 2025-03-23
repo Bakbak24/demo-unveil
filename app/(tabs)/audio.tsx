@@ -69,6 +69,26 @@ const AudioScreen = () => {
               distance="412m"
               onPress={() => console.log("Het Dijlepad pressed")}
             />
+            <FavouriteSoundSpot
+              name="Bruul"
+              distance="120m"
+              onPress={() => console.log("Bruul pressed")}
+            />
+            <FavouriteSoundSpot
+              name="Vismarkt"
+              distance="85m"
+              onPress={() => console.log("Vismarkt pressed")}
+            />
+            <FavouriteSoundSpot
+              name="De Witte Vos"
+              distance="310m"
+              onPress={() => console.log("De witte vos pressed")}
+            />
+            <FavouriteSoundSpot
+              name="De Moeder"
+              distance="500m"
+              onPress={() => console.log("De moeder pressed")}
+            />
           </>
         );
       default:
