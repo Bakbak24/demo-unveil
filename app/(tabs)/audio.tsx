@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { router } from "expo-router";
 import {
   View,
   StyleSheet,
@@ -144,7 +145,7 @@ const DefaultContent = () => (
   <View>
     {/* Grotere knoppen */}
     <View style={styles.buttonsContainer}>
-      <TouchableOpacity style={styles.largeButton}>
+      <TouchableOpacity style={styles.largeButton} onPress={() => router.push('/new-stories')}>
         <View style={styles.buttonImagePlaceholder} />
         <Text style={styles.buttonText}>New Stories</Text>
         <Ionicons
