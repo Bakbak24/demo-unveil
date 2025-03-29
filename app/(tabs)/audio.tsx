@@ -92,6 +92,151 @@ const AudioScreen = () => {
             />
           </>
         );
+        case "Free Roam":
+          return (
+            <View>
+              {/* Listen right now */}
+              <Text style={styles.sectionTitle}>Listen right now</Text>
+              <View style={styles.listenNowContainer}>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Campus De Ham Thomas More</Text>
+                    <Text style={styles.listenNowDistance}>4m</Text>
+                  </View>
+                  <Ionicons
+                    name="play"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Alice Nahonplein</Text>
+                    <Text style={styles.listenNowDistance}>18m</Text>
+                  </View>
+                  <Ionicons
+                    name="play"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+        
+              {/* Get closer to listen */}
+              <Text style={styles.sectionTitle}>Get closer to listen</Text>
+              <View style={styles.listenNowContainer}>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Volmolen</Text>
+                    <Text style={styles.listenNowDistance}>48m</Text>
+                  </View>
+                  <Ionicons
+                    name="location"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Kruidtuin</Text>
+                    <Text style={styles.listenNowDistance}>203m</Text>
+                  </View>
+                  <Ionicons
+                    name="location"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Het Dijlepad</Text>
+                    <Text style={styles.listenNowDistance}>412m</Text>
+                  </View>
+                  <Ionicons
+                    name="location"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Bruul</Text>
+                    <Text style={styles.listenNowDistance}>120m</Text>
+                  </View>
+                  <Ionicons
+                    name="location"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listenNowButton}>
+                  <Ionicons
+                    name="headset"
+                    size={24}
+                    color="white"
+                    style={styles.listenNowIcon}
+                  />
+                  <View style={styles.listenNowTextContainer}>
+                    <Text style={styles.listenNowTitle}>Vismarkt</Text>
+                    <Text style={styles.listenNowDistance}>85m</Text>
+                  </View>
+                  <Ionicons
+                    name="location"
+                    size={24}
+                    color="#5CD4FF"
+                    style={styles.listenNowIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+        
+              {/* See more */}
+              <TouchableOpacity>
+                <Text style={styles.seeMoreText}>See more</Text>
+              </TouchableOpacity>
+            </View>
+          );
       default:
         return <DefaultContent />;
     }
