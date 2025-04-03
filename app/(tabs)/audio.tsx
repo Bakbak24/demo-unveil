@@ -310,9 +310,9 @@ const DefaultContent = () => (
           style={styles.buttonIcon}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.largeButton}>
-        <View style={styles.buttonImagePlaceholder} />
-        <Text style={styles.buttonText}>For You</Text>
+      <TouchableOpacity style={styles.largeButton} onPress={() => router.push('/for-you')}>
+      <View style={styles.buttonImagePlaceholder} />
+      <Text style={styles.buttonText}>For You</Text>
         <Ionicons
           name="arrow-forward"
           size={24}
