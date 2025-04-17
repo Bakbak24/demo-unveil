@@ -32,7 +32,7 @@ export default function RootLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="new-for-you"
+        name="for-you"
         options={{ headerShown: false }}
       />
       <Stack.Screen name="+not-found" options={{}} />
