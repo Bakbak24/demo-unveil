@@ -31,6 +31,10 @@ export default function RootLayout() {
         name="new-stories"
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="new-for-you"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="+not-found" options={{}} />
     </Stack>
   );
