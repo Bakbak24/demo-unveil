@@ -1,29 +1,40 @@
 // app/(auth)/forgot-password.tsx
-import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Link, router } from 'expo-router';
+import { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
+import { Link, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ForgotPasswordFlow() {
-  const [email, setEmail] = useState('');
-  const [step, setStep] = useState(1); // 1 = email, 2 = code, 3 = new code sent, 4 = new password, 5 = success
-  const [code, setCode] = useState(['', '', '', '', '']);
-  const [newPassword, setNewPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [step, setStep] = useState(1);
+  const [code, setCode] = useState(["", "", "", "", ""]);
+  const [newPassword, setNewPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleNext = () => {
     if (step === 1 && email) {
-      setStep(2); // Naar verificatie code scherm
+      setStep(2);
     } else if (step === 2) {
-      setStep(3); // Naar code verzonden scherm
+      setStep(3);
     } else if (step === 3) {
-      setStep(4); // Naar nieuw wachtwoord scherm
+      setStep(4);
     } else if (step === 4) {
       setIsLoading(true);
-      // Simuleer API call
       setTimeout(() => {
         setIsLoading(false);
-        setStep(5); // Naar success scherm
+        setStep(5);
       }, 1500);
     }
   };
@@ -32,13 +43,35 @@ export default function ForgotPasswordFlow() {
     const newCode = [...code];
     newCode[index] = text;
     setCode(newCode);
-    
-    // Auto focus naar volgende veld
-    if (text && index < 4) {
-      // Dit vereist een ref naar het volgende TextInput veld
-      // Voor nu werkt het zonder auto-focus
-    }
   };
+
+  const isCodeFilled = code.every((c) => c !== "");
+  const isPasswordValid = newPassword && newPassword === repeatPassword;
+
+  const customHeaderLeft = () => (
+    <TouchableOpacity
+      style={{
+        width: 55,
+        height: 55,
+        borderRadius: 16,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#333",
+        marginLeft: 10,
+        marginTop: 26,
+        marginBottom: 24,
+      }}
+      onPress={() => {
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.push("/(tabs)/user");
+        }
+      }}
+    >
+      <Ionicons name="arrow-back" size={24} color="white" />
+    </TouchableOpacity>
+  );
 
   if (isLoading) {
     return (
@@ -49,200 +82,250 @@ export default function ForgotPasswordFlow() {
   }
 
   return (
-    <View style={styles.container}>
-      {/* Terug knop (niet op eerste scherm) */}
-      {step > 1 && (
-        <TouchableOpacity onPress={() => setStep(step - 1)} style={styles.backButton}>
-          <Text style={styles.backButtonText}>← Back</Text>
-        </TouchableOpacity>
-      )}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.container}>
+          {customHeaderLeft()}
 
-      {step === 1 && (
-        <>
-          <Text style={styles.title}>Forgot Password</Text>
-          <TextInput
-            placeholder="Enter your email"
-            placeholderTextColor="#aaa"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <TouchableOpacity 
-            style={[styles.button, !email && styles.buttonDisabled]} 
-            onPress={handleNext}
-            disabled={!email}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
-        </>
-      )}
+          {step === 1 && (
+            <View style={styles.content}>
+              <View>
+                <Text style={styles.title}>Forgot your password?</Text>
+                <TextInput
+                  placeholder="Enter your email"
+                  placeholderTextColor="#aaa"
+                  value={email}
+                  onChangeText={setEmail}
+                  style={styles.input}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+              <TouchableOpacity
+                style={[styles.button, !email && styles.buttonDisabled]}
+                onPress={handleNext}
+                disabled={!email}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    !email && styles.buttonTextDisabled,
+                  ]}
+                >
+                  Next
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
-      {step === 2 && (
-        <>
-          <Text style={styles.title}>Insert verification code</Text>
-          <Text style={styles.subtitle}>
-            Please allow up to 5 minutes for the code to reach your inbox. If it doesn't appear after that, you should check your spam.
-          </Text>
-          
-          <View style={styles.codeContainer}>
-            {[0, 1, 2, 3, 4].map((index) => (
-              <TextInput
-                key={index}
-                style={styles.codeInput}
-                keyboardType="number-pad"
-                maxLength={1}
-                value={code[index]}
-                onChangeText={(text) => handleCodeChange(text, index)}
-              />
-            ))}
-          </View>
-          
-          <TouchableOpacity style={styles.resendLink}>
-            <Text style={styles.resendText}>Resend code</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.button, code.some(c => !c) && styles.buttonDisabled]} 
-            onPress={handleNext}
-            disabled={code.some(c => !c)}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
-        </>
-      )}
+          {step === 2 && (
+            <View style={styles.content}>
+              <View>
+                <Text style={styles.titleCode}>Insert verification code.</Text>
+                <Text style={styles.subtitle}>
+                  Please allow up to 5 minutes for the code to reach your inbox.
+                  If it doesn’t appear after that, you should check your spam.
+                </Text>
 
-      {step === 3 && (
-        <>
-          <Text style={styles.title}>Your new code has been sent</Text>
-          <Text style={styles.subtitle}>
-            Please allow up to 5 minutes for the code to reach your inbox. If it doesn't appear after that, you should check your spam.
-          </Text>
-          <TouchableOpacity style={styles.button} onPress={handleNext}>
-            <Text style={styles.buttonText}>Continue</Text>
-          </TouchableOpacity>
-        </>
-      )}
+                <View style={styles.codeContainer}>
+                  {[0, 1, 2, 3, 4].map((index) => (
+                    <TextInput
+                      key={index}
+                      style={[
+                        styles.codeInput,
+                        code[index] ? { borderBottomColor: "#5CD4FF" } : null,
+                      ]}
+                      keyboardType="number-pad"
+                      maxLength={1}
+                      value={code[index]}
+                      onChangeText={(text) => handleCodeChange(text, index)}
+                    />
+                  ))}
+                </View>
 
-      {step === 4 && (
-        <>
-          <Text style={styles.title}>Choose a new password</Text>
-          <TextInput
-            placeholder="New password"
-            placeholderTextColor="#aaa"
-            value={newPassword}
-            onChangeText={setNewPassword}
-            style={styles.input}
-            secureTextEntry
-          />
-          <TextInput
-            placeholder="Repeat new password"
-            placeholderTextColor="#aaa"
-            value={repeatPassword}
-            onChangeText={setRepeatPassword}
-            style={styles.input}
-            secureTextEntry
-          />
-          <TouchableOpacity 
-            style={[styles.button, (!newPassword || newPassword !== repeatPassword) && styles.buttonDisabled]} 
-            onPress={handleNext}
-            disabled={!newPassword || newPassword !== repeatPassword}
-          >
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </>
-      )}
+                <TouchableOpacity style={styles.resendLink}>
+                  <Text style={styles.resendText}>Resend code</Text>
+                </TouchableOpacity>
+              </View>
 
-      {step === 5 && (
-        <>
-          <Text style={styles.title}>Your password has been reset!</Text>
-          <Text style={styles.subtitle}>
-            You can try to log in again using your new password you just created.
-          </Text>
-          <Link href="/(auth)/login" asChild>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-          </Link>
-        </>
-      )}
-    </View>
+              <TouchableOpacity
+                style={[styles.button, !isCodeFilled && styles.buttonDisabled]}
+                onPress={handleNext}
+                disabled={!isCodeFilled}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    !isCodeFilled && styles.buttonTextDisabled,
+                  ]}
+                >
+                  Next
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {step === 3 && (
+            <View style={styles.content}>
+              <View>
+                <Text style={styles.title}>Your new code has been sent.</Text>
+                <Text style={styles.subtitle}>
+                  Please allow up to 5 minutes for the code to reach your inbox.
+                  If it doesn’t appear after that, you should check your spam.
+                </Text>
+              </View>
+              <TouchableOpacity style={styles.button} onPress={handleNext}>
+                <Text style={styles.buttonText}>Continue</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {step === 4 && (
+            <View style={styles.content}>
+              <View>
+                <Text style={styles.title}>Choose a new password.</Text>
+                <TextInput
+                  placeholder="New password"
+                  placeholderTextColor="#aaa"
+                  value={newPassword}
+                  onChangeText={setNewPassword}
+                  style={styles.input}
+                  secureTextEntry
+                />
+                <TextInput
+                  placeholder="Repeat new password"
+                  placeholderTextColor="#aaa"
+                  value={repeatPassword}
+                  onChangeText={setRepeatPassword}
+                  style={styles.input}
+                  secureTextEntry
+                />
+              </View>
+
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  !isPasswordValid && styles.buttonDisabled,
+                ]}
+                onPress={handleNext}
+                disabled={!isPasswordValid}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    !isPasswordValid && styles.buttonTextDisabled,
+                  ]}
+                >
+                  Submit
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {step === 5 && (
+            <View style={styles.content}>
+              <View>
+                <Text style={styles.title}>Your password has been reset!</Text>
+                <Text style={styles.subtitle}>
+                  You can try to log in again using your new password you just
+                  created.
+                </Text>
+              </View>
+              <Link href="/(auth)/login" asChild>
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+              </Link>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#212121',
+    backgroundColor: "#212121",
     padding: 20,
     paddingTop: 50,
   },
-  backButton: {
-    alignSelf: 'flex-start',
-    marginBottom: 30,
-  },
-  backButtonText: {
-    color: '#5CD4FF',
-    fontSize: 16,
+  content: {
+    flex: 1,
+    justifyContent: "space-between",
   },
   title: {
-    color: '#FFF',
-    fontSize: 24,
-    fontWeight: 'bold',
+    color: "#FFF",
+    fontSize: 42,
+    fontWeight: "900",
     marginBottom: 20,
-    textAlign: 'center',
+  },
+  titleCode: {
+    color: "#FFF",
+    fontSize: 36,
+    fontWeight: "900",
+    marginBottom: 20,
   },
   subtitle: {
-    color: '#aaa',
-    fontSize: 14,
-    textAlign: 'center',
+    color: "#FFF",
+    fontSize: 16,
     marginBottom: 30,
-    lineHeight: 20,
   },
   input: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     borderRadius: 12,
     padding: 15,
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 16,
     marginBottom: 15,
   },
   button: {
-    backgroundColor: '#5CD4FF',
+    backgroundColor: "#5CD4FF",
     borderRadius: 12,
     padding: 15,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   buttonDisabled: {
-    opacity: 0.5,
+    backgroundColor: "#333",
   },
   buttonText: {
-    color: '#212121',
+    color: "#212121",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  buttonTextDisabled: {
+    color: "#FFF",
   },
   codeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 20,
   },
   codeInput: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#333',
-    borderRadius: 12,
-    textAlign: 'center',
-    color: '#FFF',
-    fontSize: 18,
+    width: 57.693,
+    height: 57.693,
+    backgroundColor: "transparent", 
+    borderBottomWidth: 4,
+    borderBottomColor: "#333",
+    textAlign: "center",
+    color: "#FFF",
+    fontSize: 24,
+    paddingVertical: 15,
   },
   resendLink: {
-    alignSelf: 'center',
+    alignSelf: "center",
     marginBottom: 20,
   },
   resendText: {
-    color: '#5CD4FF',
+    color: "#5CD4FF",
     fontSize: 14,
   },
 });
