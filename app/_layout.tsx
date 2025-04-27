@@ -35,6 +35,10 @@ export default function RootLayout() {
         name="for-you"
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="best-reviewed-stories"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="+not-found" options={{}} />
     </Stack>
   );

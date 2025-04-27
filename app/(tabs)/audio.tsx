@@ -300,7 +300,7 @@ const DefaultContent = () => (
           style={styles.buttonIcon}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.largeButton}>
+      <TouchableOpacity style={styles.largeButton} onPress={() => router.push('/best-reviewed-stories')}>
         <View style={styles.buttonImagePlaceholder} />
         <Text style={styles.buttonText}>Best Reviewed Stories</Text>
         <Ionicons
