@@ -59,7 +59,7 @@ const Map = () => {
     audio: any;
   }) => {
     router.push({
-      pathname: "/audio",
+      pathname: "/testaudio",
       params: {
         audio: soundSpot.audio,
         text: soundSpot.script,
