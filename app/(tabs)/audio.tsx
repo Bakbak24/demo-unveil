@@ -41,13 +41,13 @@ const AudioScreen = () => {
               imageUrl="https://via.placeholder.com/140"
               title="Through the outskirts"
               isPurchased={false}
-              onPress={() => console.log("Buy tour")}
+              onPress={() => router.push("/buytour")}
             />
             <GuidedTourWrapper
               imageUrl="https://via.placeholder.com/140"
               title="A foodies guide to Mechelen"
               isPurchased={false}
-              onPress={() => console.log("Buy tour")}
+              onPress={() => router.push("/buytour")}
             />
           </>
         );
